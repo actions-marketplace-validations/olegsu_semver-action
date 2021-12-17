@@ -16,7 +16,7 @@ runs:
   image: "docker://olsynt/semver"
   args:
     - semver
-    - version
+    - --version
     - ${{ inputs.version }}
-    - bump
+    - --bump
     - ${{ inputs.bump }}
