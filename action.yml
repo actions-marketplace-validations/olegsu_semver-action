@@ -1,4 +1,4 @@
-name: Semver
+name: Semver Bump
 description: "Bump Semantic Version"
 inputs:
   version:
