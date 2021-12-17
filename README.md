@@ -5,7 +5,7 @@ Github action that bumps semantic version
 # Example
 ```yaml
     steps:
-    - uses: olegsu/semver-action@main
+    - uses: olegsu/semver-action@v1
       id: version
       with:
         version: "1.1.1" # required

@@ -1,12 +1,16 @@
 name: Semver Bump
 description: "Bump Semantic Version"
+author: "Oleg Sucharevich"
+branding:
+  icon: git-merge
+  color: green
 inputs:
   version:
     description: "A valid semantic version"
     required: true
   bump: 
     description: "Type of the bump"
-    default: 'patch'
+    default: "patch"
     required: false
 outputs:
   version:
