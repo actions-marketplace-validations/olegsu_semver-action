@@ -1,0 +1,22 @@
+name: Semver
+description: "Bump Semantic Version"
+inputs:
+  version:
+    description: "A valid semantic version"
+    required: true
+  bump: 
+    description: "Type of the bump"
+    default: 'patch'
+    required: false
+outputs:
+  version:
+    description: "The bumped version"
+runs:
+  using: "docker"
+  image: "olsynt/semver"
+  args:
+    - semver
+    - version
+    - ${{ inputs.version }}
+    - bump
+    - ${{ inputs.bump }}
