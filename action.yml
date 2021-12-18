@@ -10,12 +10,16 @@ inputs:
     required: false
     default: ""
   version_file:
-    description: "Load version from file (it should be the first and the only line)"
+    description: "Load version from file (it should the only line in the file)"
     required: false
     default: ""
   bump: 
     description: "Type of the bump"
     default: "patch"
+    required: false
+  bump_file: 
+    description: "Load bump from file (it should the only line in the file)"
+    default: ""
     required: false
 outputs:
   version:
@@ -31,3 +35,5 @@ runs:
     - ${{ inputs.version_file }}
     - --bump
     - ${{ inputs.bump }}
+    - --bump-file
+    - ${{ inputs.bump_file }}

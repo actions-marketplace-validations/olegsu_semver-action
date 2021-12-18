@@ -14,6 +14,7 @@ func Execute() {
 
 var flags struct {
 	bump        string
+	bumpFile    string
 	version     string
 	versionFile string
 }
@@ -24,7 +25,7 @@ var rootCmd = &cobra.Command{
 		version := ""
 		if flags.versionFile != "" {
 			f, err := os.ReadFile(flags.versionFile)
-			dieOnError(err, "failed to load file")
+			dieOnError(err, "failed to load version file")
 			version = string(f)
 		}
 
@@ -40,7 +41,17 @@ var rootCmd = &cobra.Command{
 			"major": s.IncMajor,
 		}
 
-		inc, ok := bumps[flags.bump]
+		bump := "patch"
+		if flags.bump != "" {
+			bump = flags.bump
+		}
+		if flags.bumpFile != "" {
+			b, err := os.ReadFile(flags.bumpFile)
+			dieOnError(err, "failed to load bump file")
+			bump = string(b)
+		}
+
+		inc, ok := bumps[bump]
 		if !ok {
 			dieOnError(fmt.Errorf("bump type %s does not exists", flags.bump), "")
 		}
@@ -51,6 +62,7 @@ var rootCmd = &cobra.Command{
 
 func init() {
 	rootCmd.Flags().StringVar(&flags.bump, "bump", "patch", "")
+	rootCmd.Flags().StringVar(&flags.bumpFile, "bump-file", "", "")
 	rootCmd.Flags().StringVar(&flags.version, "version", "", "")
 	rootCmd.Flags().StringVar(&flags.versionFile, "version-file", "", "")
 }
