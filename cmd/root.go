@@ -13,14 +13,25 @@ func Execute() {
 }
 
 var flags struct {
-	bump    string
-	version string
+	bump        string
+	version     string
+	versionFile string
 }
 
 var rootCmd = &cobra.Command{
 	Use: "semver",
 	Run: func(cmd *cobra.Command, args []string) {
-		v, err := semver.NewVersion(flags.version)
+		version := ""
+		if flags.versionFile != "" {
+			f, err := os.ReadFile(flags.versionFile)
+			dieOnError(err, "failed to load file")
+			version = string(f)
+		}
+
+		if flags.version != "" {
+			version = flags.version
+		}
+		v, err := semver.NewVersion(version)
 		dieOnError(err, "failed to validate version "+flags.version)
 		s := *v
 		bumps := map[string]func() semver.Version{
@@ -41,6 +52,7 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.Flags().StringVar(&flags.bump, "bump", "patch", "")
 	rootCmd.Flags().StringVar(&flags.version, "version", "", "")
+	rootCmd.Flags().StringVar(&flags.versionFile, "version-file", "", "")
 }
 
 func dieOnError(err error, msg string) {

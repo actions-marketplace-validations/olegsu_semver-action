@@ -7,7 +7,12 @@ branding:
 inputs:
   version:
     description: "A valid semantic version"
-    required: true
+    required: false
+    default: ""
+  version_file:
+    description: "Load version from file (it should be the first and the only line)"
+    required: false
+    default: ""
   bump: 
     description: "Type of the bump"
     default: "patch"
@@ -22,5 +27,7 @@ runs:
     - semver
     - --version
     - ${{ inputs.version }}
+    - --version-file
+    - ${{ inputs.version_file }}
     - --bump
     - ${{ inputs.bump }}
